@@ -3,7 +3,7 @@
     <b-media tag="li" class="mb-4 w-75">
       <template #aside>
         <router-link :to="{ name: BLOG_DETAIL, params: { id: blog.id } }">
-          <b-img blank blank-color="#abc" width="64" alt="placeholder"></b-img>
+          <b-img width="64" alt="placeholder" :src="blog.image"></b-img>
         </router-link>
       </template>
       <router-link :to="{ name: BLOG_DETAIL, params: { id: blog.id } }">
@@ -11,6 +11,9 @@
       </router-link>
       <p class="mb-0">
         {{ blog.description }}
+      </p>
+      <p class="mb-0 text-muted">
+        Created: {{ blog.createdAt | date }}
       </p>
     </b-media>
     <div class="w-25 text-right">

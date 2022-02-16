@@ -7,6 +7,8 @@ import store from '@/store'
 
 // plugins
 import '@/plugins/bootstrap'
+import '@/plugins/vee-validate'
+import '@/plugins/filters'
 
 Vue.config.productionTip = false
 

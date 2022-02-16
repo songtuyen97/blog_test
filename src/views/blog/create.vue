@@ -5,22 +5,45 @@
     <!-- End sub header -->
     <LoadingInnerPage v-if="loading" />
     <div v-else class="container">
-      <LabelInputText :value.sync="blogInfo.title" label="Title" class="mb-4"/>
-      <LabelTextArea :value.sync="blogInfo.description" label="Description" class="mb-4"/>
-      <LabelTextArea :value.sync="blogInfo.content" label="Content" rows="10"/>
-      <b-row no-gutters align-h="end" class="mt-5">
-        <router-link :to="{ name: BLOG_LIST }">
+      <b-form @submit.stop.prevent="onSubmit">
+        <LabelInputText
+          id="title"
+          name="title"
+          v-model="blogInfo.title"
+          label="Title (*)"
+          class="mb-4"
+          :rules="{ required: true, max: 255 }"
+        />
+        <LabelTextArea
+          id="description"
+          name="description"
+          v-model="blogInfo.description"
+          label="Description (*)"
+          class="mb-4"
+          :rules="{ required: true, max: 255 }"
+        />
+        <LabelTextArea
+          id="content"
+          name="content"
+          v-model="blogInfo.content"
+          label="Content (*)"
+          rows="10"
+          :rules="{ required: true }"
+        />
+        <b-row no-gutters align-h="end" class="mt-5">
+          <router-link :to="{ name: BLOG_LIST }">
+            <b-button
+              class="mr-2"
+              :disabled="loadingSubmitted"
+            >Cancel</b-button>
+          </router-link>
           <b-button
-            class="mr-2"
+            type="submit"
+            variant="success"
             :disabled="loadingSubmitted"
-          >Cancel</b-button>
-        </router-link>
-        <b-button
-          @click="onSubmit"
-          variant="success"
-          :disabled="loadingSubmitted"
-        >Submit</b-button>
-      </b-row>
+          >Submit</b-button>
+        </b-row>
+      </b-form>
     </div>
   </div>
 </template>
@@ -58,11 +81,17 @@ export default {
     ...mapActions('blog', ['fetchBlogDetail', 'fetchBlogs']),
 
     onSubmit () {
-      if (this.isEditMode) {
-        this.onSubmitForEdit()
-      } else if (this.isCreationMode) {
-        this.onSubmitForCreation()
-      }
+      this.$validator.validateAll().then(result => {
+        if (!result) {
+          return
+        }
+
+        if (this.isEditMode) {
+          this.onSubmitForEdit()
+        } else if (this.isCreationMode) {
+          this.onSubmitForCreation()
+        }
+      })
     },
     async onSubmitForCreation () {
       try {
