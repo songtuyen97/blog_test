@@ -6,6 +6,6 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   modules: {
-    auth: require('./modules/blog').default
+    blog: require('./modules/blog').default
   }
 })
