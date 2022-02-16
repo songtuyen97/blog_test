@@ -1,7 +1,8 @@
 import axios from 'axios'
+import { HOST_API } from '@/configs/constant'
 
 export function makeRequest () {
   return axios.create({
-    baseURL: 'https://620c73c3b5736325938e7d4b.mockapi.io/'
+    baseURL: HOST_API
   })
 }

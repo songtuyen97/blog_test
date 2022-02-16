@@ -6,6 +6,7 @@
           <b-form-input
             v-model="blogsParams.search"
             placeholder="Search"
+            type="search"
           ></b-form-input>
         </b-col>
         <router-link :to="{ name: BLOG_CREATE }">
@@ -20,6 +21,7 @@
 
 <script>
 import { BLOG_CREATE } from '@/configs/routesName'
+import { TIME_DELAY_SEARCH } from '@/configs/constant'
 import _debounce from 'lodash/debounce'
 import { mapActions, mapGetters } from 'vuex'
 
@@ -28,7 +30,7 @@ export default {
     'blogsParams.search': _debounce(function (value) {
       this.blogsParams.p = 1
       this.fetchBlogs()
-    }, 500)
+    }, TIME_DELAY_SEARCH)
   },
   computed: {
     ...mapGetters('blog', ['blogsParams'])

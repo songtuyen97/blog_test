@@ -5,6 +5,7 @@
     <!-- End sub header -->
     <LoadingInnerPage v-if="loading" />
     <div v-else class="container">
+      <Sort class="mb-5"/>
       <ul class="list-unstyled">
         <Item v-for="blog in blogs" :key="blog.id" :blog="blog" />
       </ul>
@@ -24,12 +25,14 @@
 import { mapGetters, mapActions } from 'vuex'
 import Item from '@/components/blog/list/Item.vue'
 import SubHeader from '@/components/blog/list/SubHeader.vue'
+import Sort from '@/components/blog/list/Sort.vue'
 import LoadingInnerPage from '@/components/entries/LoadingInnerPage.vue'
 
 export default {
   components: {
     Item,
     SubHeader,
+    Sort,
     LoadingInnerPage
   },
   computed: {
